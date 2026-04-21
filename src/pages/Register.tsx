@@ -22,7 +22,7 @@ export const Register = () => {
               <input type="password" className="border" />
             </div>
             <div className="m-2 flex justify-center">
-              <button className="bg-amber-600 rounded-2xl py-2 px-10 my-5">
+              <button className="bg-emerald-600 rounded-2xl py-2 px-10 my-5">
                 <Link to={"/register"}>Register</Link>
               </button>
             </div>
