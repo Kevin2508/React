@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Link, useNavigate } from "react-router-dom";
 import { Heading } from "../components/Heading";
+
 import { useEffect, useState } from "react";
-import API from "../lib/utils";
+import API from "../config/utils";
+
+
 interface signUpBody {
 
     userName: string;
@@ -18,29 +22,40 @@ export const Register: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [imageCaptcha, setImageCaptcha] = useState("");
   const [textCaptcha, setTextCaptcha] = useState("");
+  const [captchaFetchTime, setCaptchaFetchTime] = useState<number>(0);
   const navigate = useNavigate();
 
-  const fetchCaptcha = async () => {
+  const fetchCaptcha = async (refresh = false) => {
     try {
+     const url = refresh? "http://localhost:3000/api/auth/captcha?refresh=true"
+      : "http://localhost:3000/api/auth/captcha";
       const res = await API.get<string>(
-        "http://localhost:3000/api/auth/captcha",
+        url
       );
       setImageCaptcha(res.data);
+      setCaptchaFetchTime(Date.now());
     } catch (error) {
       console.error("Error fetching captcha:", error);
     }
   };
 
   const refreshCaptcha = function () {
-    fetchCaptcha();
+    fetchCaptcha(true);
   };
 
   useEffect(() => {
-    fetchCaptcha();
+    fetchCaptcha(true);
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const elapsedTime = (Date.now()- captchaFetchTime)/1000;
+    if(elapsedTime <3){
+      setError('Please verify again');
+      fetchCaptcha();
+      setTextCaptcha("");
+      return;
+    }
     const correctCaptcha = sessionStorage.getItem("captcha_answer");
     if (textCaptcha === correctCaptcha) {
       console.log("Login successs");
@@ -173,6 +188,7 @@ export const Register: React.FC = () => {
               >
                 <Link to={"/register"}>Register</Link>
               </button>
+              
             </div>
           </form>
         </fieldset>

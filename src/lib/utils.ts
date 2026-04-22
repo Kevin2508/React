@@ -1,13 +1,6 @@
-import axios from "axios";
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
 
-const API = axios.create({
-    baseURL:"http://localhost:3000/api",
-    withCredentials:true,
-})
-
-const token = localStorage.getItem("token");
-if(token){
-    API.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }
-
-export default API;
