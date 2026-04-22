@@ -3,13 +3,11 @@ import { Heading } from "../components/Heading";
 import { useEffect, useState } from "react";
 import API from "../lib/utils";
 interface signUpBody {
-  success?: boolean;
-  error?: string;
-  data?: {
+
     userName: string;
     email: string;
     password: string;
-  };
+  captcha:unknown
 }
 
 export const Register: React.FC = () => {
@@ -17,7 +15,7 @@ export const Register: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState(false);
   const [imageCaptcha, setImageCaptcha] = useState("");
   const [textCaptcha, setTextCaptcha] = useState("");
   const navigate = useNavigate();
@@ -27,7 +25,6 @@ export const Register: React.FC = () => {
       const res = await API.get<string>(
         "http://localhost:3000/api/auth/captcha",
       );
-      console.log(res);
       setImageCaptcha(res.data);
     } catch (error) {
       console.error("Error fetching captcha:", error);
@@ -57,14 +54,13 @@ export const Register: React.FC = () => {
       password,
       captcha: textCaptcha,
     };
-    setError("");
-    setSuccess("");
+   
     try {
       const res = await API.post<signUpBody>("/auth/signup", formData);
-      const result = res.data;
-
-      if (result?.success) {
-        setSuccess("Registration successful");
+      const result = res
+      console.log(result);
+      if (result) {
+        setSuccess(true);
         setUserName("");
         setEmail("");
         setPassword("");
@@ -73,7 +69,6 @@ export const Register: React.FC = () => {
       navigate("/login")
        
       } else {
-        setError(result.error);
         fetchCaptcha();
       }
     } catch (error) {
