@@ -4,6 +4,7 @@ import { Heading } from "../components/Heading";
 
 import { useEffect, useState } from "react";
 import API from "../config/utils";
+import { Button } from "@/components/ui/button";
 
 
 interface signUpBody {
@@ -107,7 +108,7 @@ export const Register: React.FC = () => {
       )}
       <div>
         <fieldset className="border my-5 mx-100 px-20 py-4 flex flex-col justify-between h-60 align-middle">
-          <legend className="font-bold">Login</legend>
+          <legend className="font-bold">Register</legend>
 
           <form className="flex justify-between flex-col">
             <div className="m-2">
@@ -181,13 +182,14 @@ export const Register: React.FC = () => {
               />
             </div>
             <div className="m-2 flex justify-center">
-              <button
+              <Button
                 type="submit"
+                variant="default"
                 onClick={handleSubmit}
-                className="bg-emerald-600 rounded-2xl py-2 px-10 my-5"
+                className="rounded-2xl py-2 px-10 my-5"
               >
                 <Link to={"/register"}>Register</Link>
-              </button>
+              </Button>
               
             </div>
           </form>

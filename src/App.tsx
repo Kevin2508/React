@@ -7,6 +7,8 @@ import { About } from "./pages/About";
 import { Dashboard } from "./pages/Dashboard";
 import { useEffect, useState } from "react";
 import { UnauthorizedPage } from "./pages/UnauthorizedPage";
+import NavbarSection from "./components/common/Navbar2";
+import { Login2 } from "./pages/Login2";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -19,7 +21,7 @@ const App = () => {
 
   return (
     <Router>
-      <Navbar></Navbar>
+      <NavbarSection></NavbarSection>
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/home" element={<Home />}></Route>

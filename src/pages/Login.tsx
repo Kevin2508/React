@@ -3,6 +3,7 @@ import {  Link, useNavigate } from "react-router-dom";
 import { Heading } from "../components/Heading";
 import {  useEffect, useState } from "react";
 import API from "../config/utils";
+import { Button } from "@/components/ui/button";
 
 interface SignInBody {
   email: string;
@@ -147,10 +148,10 @@ export const Login = () => {
               />
             </div>
             <div className="m-2 flex justify-center">
-              <button onClick={handleLogin} className="bg-emerald-600 rounded-2xl py-2 px-10 my-5">
+              <Button onClick={handleLogin} className="rounded-2xl py-2 px-10 my-5">
                
                 <Link to={"/dashboard"}>Login</Link>
-              </button>
+              </Button>
             </div>
           </form>
         </fieldset>
